@@ -9,6 +9,7 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('todolist/<str:username>/', views.TaskListView.as_view(), name='todolist-main'),
     path('todolist/<str:username>/<int:task_id>/completed', views.mark_complete, name='todolist-complete'),
-    path('todolist/create-task', views.TaskCreateView.as_view(), name='create-task')
+    path('todolist/create-task', views.TaskCreateView.as_view(), name='create-task'),
+    path('todolist/<int:pk>/delete', views.TaskDeleteView.as_view(), name='task-delete')
 ]
 

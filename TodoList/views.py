@@ -3,11 +3,12 @@ from .forms import UserRegisterForm
 from django.contrib import messages
 from django.contrib.auth.models import User
 from .models import Task
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DeleteView
 from django.urls import reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponseRedirect
+from .forms import TaskCreationForm
 # Create your views here.
 
 
@@ -39,12 +40,23 @@ class TaskListView(LoginRequiredMixin, ListView):
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
-    model = Task
-    fields = ['name', 'description', 'deadline']
+    form_class = TaskCreationForm
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.creator = self.request.user
         return super(TaskCreateView, self).form_valid(form)
+
+
+class TaskDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Task
+    success_url = '/home'
+
+    def test_func(self):
+        task = self.get_object()
+        if task.creator == self.request.user:
+            return True
+        else:
+            return False
 
 
 def register(request):

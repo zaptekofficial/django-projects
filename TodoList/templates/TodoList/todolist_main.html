@@ -12,10 +12,11 @@
 	    <h2><a class="article-title" href="">{{ task.description }}</a></h2>
 	    {% if task.status == False %}
 	    <p class="article-content">Your task has not been completed </p>
-	    <a href="{% url 'todolist-complete' user.username task.id %}"><button onclick=""><p>Mark Completed</p></button></a>
+	    <a href="{% url 'todolist-complete' user.username task.id %}"><button><p>Mark Completed</p></button></a>
 	    {% else %}
 	    <p class="article-content">Your task has been completed </p>
 	    {% endif %}
+	    <a href="{% url 'task-delete' task.id %}"><button><p>Delete Task</p></button></a>
 	  </div>
 	</article>
 	  {% endfor %}
