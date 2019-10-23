@@ -36,11 +36,13 @@ class TaskListView(LoginRequiredMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        return Task.objects.filter(creator=self.request.user).order_by('-deadline')
+        return Task.objects.filter(creator=self.request.user).order_by('deadline')
 
 
 class TaskCreateView(LoginRequiredMixin, CreateView):
     form_class = TaskCreationForm
+    template_name = 'TodoList/create-task.html'
+    success_url = '/home'
 
     def form_valid(self, form):
         form.instance.creator = self.request.user

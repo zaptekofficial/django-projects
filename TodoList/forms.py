@@ -13,7 +13,7 @@ class UserRegisterForm(UserCreationForm):
 
 
 class TaskCreationForm(forms.ModelForm):
-    deadline = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M:%S'], widget=forms.DateTimeInput(format='%d/%m/%Y %H:%M:%S'))
+    deadline = forms.DateTimeField(input_formats=['%d/%m/%Y %H:%M:%S'])
 
     class Meta:
         model = Task
